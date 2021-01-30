@@ -1,0 +1,65 @@
+CREATE TABLE Company(
+	companyCode INT(4),
+	companyName VARCHAR(30) UNIQUE NOT NULL,
+	companyDescription VARCHAR(50),
+	constraint c_cc_pk PRIMARY KEY(companyCode)
+);
+
+
+CREATE TABLE Staff(
+	staffId INT(4),
+	staffFullName VARCHAR(50) NOT NULL,
+	staffPosition VARCHAR(20),
+	staffEmail VARCHAR(20) UNIQUE NOT NULL,
+	companyCode INT(4) NOT NULL,
+	constraint s_si_pk PRIMARY KEY(staffId),
+	constraint st_cc_fk FOREIGN KEY(companyCode) references Company(companyCode)
+);
+
+
+CREATE TABLE Offer(
+	offerCode INT(4),
+	offerName VARCHAR(30) NOT NULL,
+	offerDescription VARCHAR(30),
+	offerDeadline DATE NOT NULL,
+	offerStartDate DATE NOT NULL,
+	companyCode INT(4) NOT NULL,
+	constraint o_oc_pk PRIMARY KEY(offerCode),
+	constraint o_cc_fk FOREIGN KEY(companyCode) references Company(companyCode)
+);
+
+
+INSERT INTO Company
+VALUES (, "" , ""),
+VALUES (, "" , ""),
+VALUES (, "" , "");
+
+
+
+
+INSERT INTO Staff
+VALUES (, "" , "" , "" , )
+
+
+
+
+INSERT INTO Offer
+VALUES (, "" , "" , '' , '', );
+
+
+
+
+SELECT companyCode, companyName, COUNT(*) "NumberOfStaff"
+FROM staff s JOIN company c
+ON c.companyCode = s.companyCode
+GROUP BY s.companyCode
+
+
+
+
+
+SELECT c.companyName, s.staffFullName, s.staffPosition, o.offerName, o.offerDescription
+FROM company c JOIN staff s  
+ON c.companyCode = s.companyCode
+JOIN offer o
+ON c.companyCode = o.companyCode

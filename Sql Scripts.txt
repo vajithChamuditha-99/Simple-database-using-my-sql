@@ -1,0 +1,66 @@
+CREATE DATABASE w1761107_mydatabase;
+
+
+CREATE TABLE w1761107_Company (
+    w1761107_companyCode int NOT NULL,
+    w1761107_companyName varchar (255) ,
+    w1761107_companyDescreption varchar (255) ,
+    CONSTRAINT PK_Company PRIMARY KEY (w1761107_companyCode)
+);
+
+
+CREATE TABLE w1761107_Staff (    
+    w1761107_staffID int NOT NULL,    
+    w1761107_staffFullName varchar (255) ,    
+    w1761107_staffPosition varchar (255) ,    
+    w1761107_staffEmail varchar (255) ,
+    w1761107_companyCode int NOT NULL,
+    CONSTRAINT PK_Company PRIMARY KEY (w1761107_staffID) ,
+    CONSTRAINT FK_Staff FOREIGN KEY (w1761107_companyCode)REFERENCES w1761107_Company (w1761107_companyCode)
+);
+
+
+
+CREATE TABLE w1761107_Offer (    
+    w1761107_offerCode int NOT NULL,    
+    w1761107_offerName varchar (255) ,    
+    w1761107_offerDescreption varchar (255) ,    
+    w1761107_offerDeadline varchar (20) ,
+    w1761107_offerStartDate varchar (20) ,
+    w1761107_companyCode int NOT NULL,
+    CONSTRAINT PK_Offer PRIMARY KEY (w1761107_offerCode) ,
+    CONSTRAINT FK_Offer FOREIGN KEY (w1761107_companyCode)REFERENCES 	w1761107_Company (w1761107_companyCode)
+);
+
+
+INSERT INTO `w1761107_company`(`w1761107_companyCode`, `w1761107_companyName`, `w1761107_companyDescreption`) VALUES 
+(1001, "Dialog Axiata" , "Tele-communication company") , 
+(1002, "Toyota" , "Motor vehicle manufactures") ,
+(1003, "Lankem" , "Multi national agricultural company");
+
+
+INSERT INTO `w1761107_offer`(`w1761107_offerCode`, `w1761107_offerName`, `w1761107_offerDescreption`, `w1761107_offerDeadline`, `w1761107_offerStartDate`, `w1761107_companyCode`) VALUES 
+(3423,"Placement","this offer is for newebies to the industry.","20.08.2021","01.01.2020",1003),
+(2061,"jobs","part time -permant","01.01.2022","01.01.2021",1001),
+(4899,"Graduation schemes","this offer is granted to agreed time period","31.12.2020","01.12.2020",1002),
+(3075,"job","perment - part time","04.11.2021","05.08.2021",1001),
+(6671,"placement","internships","14.04.2022","31.21.2021",1002);
+
+
+INSERT INTO `w1761107_staff`(`w1761107_staffID`, `w1761107_staffFullName`, `w1761107_staffPosition`, `w1761107_staffEmail`, `w1761107_companyCode`) VALUES 
+(1769,"K.A.Prashan darshana","System analisyst","prashand@gmail.com",1001),
+(2099,"Ashoka kumara gamage","Mechanic","Ashoka.1978@gmail.com",1002),
+(4712,"Thilina koralage","Supervisor","Thilina.k@toyota.ac.lk",1002),
+(9875,"A.L.Shehan Sathsara","Branch manager","shehans@gmail.com",1003);
+
+SELECT s.w1761107_companyCode, c.w1761107_companyName, COUNT(*) "w1761116_NumberOfStaff"
+FROM w1761107_staff s JOIN w1761107_company c
+ON c.w1761107_companyCode = s.w1761107_companyCode
+GROUP BY s.w1761107_companyCode
+
+
+SELECT c.w1761107_companyName, s.w1761107_staffFullName, o.w1761107_offerName, o.w1761107_offerDescreption
+FROM w1761107_company c JOIN w1761107_staff s  
+ON c.w1761107_companyCode = s.w1761107_companyCode
+JOIN w1761107_offer o
+ON c.w1761107_companyCode = o.w1761107_companyCode
